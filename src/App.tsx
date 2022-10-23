@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TableView from './uiComponent/TableView';
+import { tableViewDataTest } from './testingData/tableViewDataTest';
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
         >
           Learn React
         </a>
+        <TableView data={tableViewDataTest}/>
       </header>
     </div>
   );
