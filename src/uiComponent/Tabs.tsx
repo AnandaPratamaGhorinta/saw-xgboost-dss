@@ -1,37 +1,44 @@
 import { Tabs as AntdTabs } from "antd";
-import TabPane from "rc-tabs";
-import React from "react";
+import React, { useMemo } from "react";
 
 export interface TabsProps {
-  children: React.ReactNode;
-}
-export default function Tabs() {
-  return <AntdTabs></AntdTabs>;
-}
-
-interface TabPanesProps {
-  key: string;
-  tab: React.ReactNode;
-  disable: boolean;
-  children: React.ReactNode;
+  key?: string;
+  activeKey?: string;
+  tabPanes: TabPanesProps[];
 }
 
-interface TestData {
-  billing_1: string;
-  billing_2: string;
+export default function Tabs({ key, activeKey, tabPanes }: TabsProps) {
+  const newTabChildren = useMemo(() => {
+    const newPanes: React.ReactNode[] = [];
+    tabPanes.forEach((it) => {
+      const data = (
+        <TabPanes key={it?.key} tab={it?.tab} disable={it?.disable}>
+          {it?.children}
+        </TabPanes>
+      );
+      newPanes.push(data);
+    });
+    return newPanes;
+  }, [tabPanes]);
+
+  return (
+    <AntdTabs key={key} activeKey={activeKey}>
+      {newTabChildren}
+    </AntdTabs>
+  );
 }
 
-const testData = [
-  {
-    billing_1: "asdas",
-    billing_2: "asdsa",
-  },
-  {
-    billing_1: "asdas",
-    billing_2: "asdsa",
-  },
-];
+export interface TabPanesProps {
+  key?: string;
+  tab?: React.ReactNode;
+  disable?: boolean;
+  children?: React.ReactNode;
+}
 
 export function TabPanes({ key, tab, children }: TabPanesProps) {
-  const testKey: string[] = [];
+  return (
+    <AntdTabs.TabPane key={key} tab={tab}>
+      {children}
+    </AntdTabs.TabPane>
+  );
 }
