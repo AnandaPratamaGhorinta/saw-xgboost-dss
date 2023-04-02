@@ -1,7 +1,12 @@
 import "./App.css";
+import Sidebar from "./menu/sidebar/Sidebar";
 
 function App() {
-  return <>Testing</>;
+  return (
+    <>
+      <Sidebar />
+    </>
+  );
 }
 
 export default App;
