@@ -1,3 +1,4 @@
+import UserCrud from "./MenuList/userCrud";
 import MenuFooter from "./components/MenuFooter";
 import MenuHeader from "./components/MenuHeader";
 import MenuRouter from "./components/MenuRouter";
@@ -17,6 +18,7 @@ export default function AppMenu() {
       <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
         <SideBarMenu />
         <MenuRouter />
+        <UserCrud />
       </div>
       <MenuFooter />
     </div>

@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../MenuList/HomePage/HomePage";
+import HomePage from "../MenuList/homePage";
 
 function MenuRouter() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={HomePage()} />
-        <Route path="/home-review" element={<>Test ChildMenu</>} />
-        <Route path="training-section" element={""} />
+        <Route path="/" element={<>welcome </>} />
+        <Route path="/home" element={HomePage()} />
+        <Route path="/training-section" element={<>welcome/</>} />
       </Routes>
     </div>
   );

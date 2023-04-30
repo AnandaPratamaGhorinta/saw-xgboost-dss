@@ -7,12 +7,12 @@ export const menuItems: MenuItem[] = [
       label: "Home",
       key: "/",
       children:[{
-        label:"homeReview",
-        key:"/home-review"
+        label:"Home",
+        key:"/home"
       }]
     },
     {
-      label: "Training Playground",
-      key: "/training-section",
+      label: "User CRUD",
+      key: "/view-user",
     },
   ];
