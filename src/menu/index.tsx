@@ -1,7 +1,6 @@
-import UserCrud from "./MenuList/userCrud";
+import { Outlet } from "react-router-dom";
 import MenuFooter from "./components/MenuFooter";
 import MenuHeader from "./components/MenuHeader";
-import MenuRouter from "./components/MenuRouter";
 import SideBarMenu from "./components/SidebarMenu";
 
 export default function AppMenu() {
@@ -12,13 +11,24 @@ export default function AppMenu() {
         flexDirection: "column",
         flex: 1,
         height: "100vh",
+        backgroundColor: "DarkGray",
       }}
     >
       <MenuHeader />
-      <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
+      <div
+        style={{ display: "flex", flexDirection: "row", flex: 1, flexGrow: 1 }}
+      >
         <SideBarMenu />
-        <MenuRouter />
-        <UserCrud />
+        <div
+          style={{
+            flexGrow: 1,
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "Gainsboro",
+          }}
+        >
+          <Outlet />
+        </div>
       </div>
       <MenuFooter />
     </div>

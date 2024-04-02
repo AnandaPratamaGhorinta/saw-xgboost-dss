@@ -6,13 +6,11 @@ import UserCrudUpdate from "./update";
 
 export default function UserCrud() {
   return (
-    <div>
-      <Routes>
-        <Route path="/add-user" element={UserCrudAdd()} />
-        <Route path="/delete-user" element={UserCrudDelete()} />
-        <Route path="/update-user" element={UserCrudUpdate()} />
-        <Route path="/view-user" element={UserCrudView()} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/add-user" element={UserCrudAdd()} />
+      <Route path="/delete-user" element={UserCrudDelete()} />
+      <Route path="/update-user" element={UserCrudUpdate()} />
+      <Route path="/view-user" element={UserCrudView()} />
+    </Routes>
   );
 }

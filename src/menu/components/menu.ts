@@ -5,14 +5,14 @@ type MenuItem = Required<MenuProps>["items"][number];
 export const menuItems: MenuItem[] = [
     {
       label: "Home",
-      key: "/",
-      children:[{
-        label:"Home",
-        key:"/home"
-      }]
+      key: "/home",
     },
     {
       label: "User CRUD",
-      key: "/view-user",
+      key: "/user-crud",
+    },
+    {
+      label: "Test train",
+      key: "/training-section",
     },
   ];

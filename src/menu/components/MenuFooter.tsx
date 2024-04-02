@@ -2,6 +2,7 @@ export default function MenuFooter() {
   return (
     <div
       style={{
+        marginTop: "auto",
         height: 60,
         backgroundColor: "gray",
         color: "black",
@@ -10,7 +11,7 @@ export default function MenuFooter() {
         alignItems: "center",
       }}
     >
-      Footer
+      2024
     </div>
   );
 }

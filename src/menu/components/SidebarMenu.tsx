@@ -11,12 +11,21 @@ export default function SideBarMenu() {
     }
   };
   return (
-    <div style={{ width: 256 }}>
+    <div
+      style={{
+        width: 256,
+        position: "fixed",
+        display: "flex",
+        justifyContent: "center",
+        overflow: "auto",
+        height: "100%",
+      }}
+    >
       <Menu
         defaultSelectedKeys={["/home"]}
         defaultOpenKeys={["/home"]}
         mode={"inline"}
-        theme={"light"}
+        theme={"dark"}
         items={menuItems}
         onClick={handleOnMenuClick}
       />

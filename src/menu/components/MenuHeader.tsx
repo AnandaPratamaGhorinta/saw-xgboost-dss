@@ -3,7 +3,7 @@ export default function MenuHeader() {
     <div
       style={{
         height: 60,
-        backgroundColor: "lightblue",
+        backgroundColor: "SlateGrey",
         color: "white",
         display: "flex",
         justifyContent: "center",

@@ -10,7 +10,6 @@ export default function HomePage() {
     <div>
       <h1 className={classes.header}>Home Page</h1>
       <div className={classes.home}>content</div>
-      <img className={classes.icon} src="robo.png" alt="robo-icon" />
     </div>
   );
 }

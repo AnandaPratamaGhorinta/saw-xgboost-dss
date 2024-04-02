@@ -5,6 +5,7 @@ export const homePageStyles = {
         border: "5px solid",
         borderColor: "light blue",
         padding: "50px",
+        backgroundColor:'white',
         borderRadius: "20px",
         marginLeft: "100px",
         textAlign: "center"
