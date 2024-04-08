@@ -11,7 +11,7 @@ export default function AppMenu() {
         flexDirection: "column",
         flex: 1,
         height: "100vh",
-        backgroundColor: "DarkGray",
+        backgroundColor: "white",
       }}
     >
       <MenuHeader />

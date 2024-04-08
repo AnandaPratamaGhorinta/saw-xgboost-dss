@@ -1,5 +1,6 @@
 import { createUseStyles } from "react-jss";
 import { homePageStyles } from "./homePage.style";
+import ViewTable from "./ViewTable";
 
 const styles = createUseStyles(homePageStyles);
 
@@ -7,9 +8,8 @@ export default function HomePage() {
   const classes = styles();
 
   return (
-    <div>
-      <h1 className={classes.header}>Home Page</h1>
-      <div className={classes.home}>content</div>
+    <div className={classes.home}>
+      <ViewTable />
     </div>
   );
 }

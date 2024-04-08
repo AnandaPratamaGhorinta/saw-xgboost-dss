@@ -1,14 +1,14 @@
 export const homePageStyles = {
     home: {
-        width: "300px",
-        height:"300px",
-        border: "5px solid",
-        borderColor: "light blue",
-        padding: "50px",
+        width: "auto",
+        height:"auto",
+        padding: "30px",
         backgroundColor:'white',
         borderRadius: "20px",
-        marginLeft: "100px",
-        textAlign: "center"
+        marginTop: "20px",
+        marginBottom: "20px",
+        boxShadow: "12px 12px 2px 1px rgba(0, 0, 255, .2)",
+         display: "grid",
       },
     header :{
         marginLeft:"25px"
