@@ -8,6 +8,10 @@ export const menuItems: MenuItem[] = [
       key: "/home",
     },
     {
+      label : "Criteria",
+      key:"/criteria"
+    },
+    {
       label: "User CRUD",
       key: "/user-crud",
     },
