@@ -1,16 +1,14 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 import sqlite3
 
-app = Flask(__name__)
+kriteria_bp = Blueprint('kriteria', __name__)
 DATABASE = 'kriteria_kos.db'
 
-# Fungsi untuk membuat koneksi ke database
 def get_db():
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row
     return conn
 
-# Inisialisasi database dan tabel
 def init_db():
     with get_db() as conn:
         cursor = conn.cursor()
@@ -25,8 +23,7 @@ def init_db():
         ''')
         conn.commit()
 
-# Endpoint untuk membuat kriteria baru
-@app.route('/kriteria', methods=['POST'])
+@kriteria_bp.route('/kriteria', methods=['POST'])
 def add_kriteria():
     data = request.get_json()
     kode = data['kode']
@@ -40,8 +37,7 @@ def add_kriteria():
         conn.commit()
     return jsonify({'message': 'Kriteria created successfully!'}), 201
 
-# Endpoint untuk mendapatkan semua kriteria
-@app.route('/kriteria', methods=['GET'])
+@kriteria_bp.route('/kriteria', methods=['GET'])
 def get_kriteria():
     with get_db() as conn:
         cursor = conn.cursor()
@@ -49,8 +45,7 @@ def get_kriteria():
         kriteria = cursor.fetchall()
         return jsonify([dict(row) for row in kriteria]), 200
 
-# Endpoint untuk mendapatkan kriteria berdasarkan ID
-@app.route('/kriteria/<int:id>', methods=['GET'])
+@kriteria_bp.route('/kriteria/<int:id>', methods=['GET'])
 def get_kriteria_by_id(id):
     with get_db() as conn:
         cursor = conn.cursor()
@@ -60,8 +55,7 @@ def get_kriteria_by_id(id):
             return jsonify({'message': 'Kriteria not found'}), 404
         return jsonify(dict(kriteria)), 200
 
-# Endpoint untuk memperbarui kriteria
-@app.route('/kriteria/<int:id>', methods=['PUT'])
+@kriteria_bp.route('/kriteria/<int:id>', methods=['PUT'])
 def update_kriteria(id):
     data = request.get_json()
     kode = data['kode']
@@ -78,8 +72,7 @@ def update_kriteria(id):
             return jsonify({'message': 'Kriteria not found'}), 404
     return jsonify({'message': 'Kriteria updated successfully!'}), 200
 
-# Endpoint untuk menghapus kriteria
-@app.route('/kriteria/<int:id>', methods=['DELETE'])
+@kriteria_bp.route('/kriteria/<int:id>', methods=['DELETE'])
 def delete_kriteria(id):
     with get_db() as conn:
         cursor = conn.cursor()
@@ -88,7 +81,3 @@ def delete_kriteria(id):
         if cursor.rowcount == 0:
             return jsonify({'message': 'Kriteria not found'}), 404
     return jsonify({'message': 'Kriteria deleted successfully!'}), 200
-
-if __name__ == '__main__':
-    init_db()
-    app.run(debug=True)

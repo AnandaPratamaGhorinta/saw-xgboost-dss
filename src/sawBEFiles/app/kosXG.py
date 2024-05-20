@@ -1,8 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 import sqlite3
 
-app = Flask(__name__)
-
+kos_bp = Blueprint('kos', __name__)
 DATABASE = 'kos.db'
 
 def create_table():
@@ -36,7 +35,7 @@ def create_table():
 
 create_table()
 
-@app.route('/kos', methods=['POST'])
+@kos_bp.route('/kos', methods=['POST'])
 def create_kos():
     data = request.get_json()
     conn = sqlite3.connect(DATABASE)
@@ -57,7 +56,7 @@ def create_kos():
     conn.close()
     return jsonify({'message': 'Kos created successfully'}), 201
 
-@app.route('/kos', methods=['GET'])
+@kos_bp.route('/kos', methods=['GET'])
 def get_all_kos():
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -91,7 +90,7 @@ def get_all_kos():
         output.append(kos_data)
     return jsonify(output), 200
 
-@app.route('/kos/<id>', methods=['GET'])
+@kos_bp.route('/kos/<id>', methods=['GET'])
 def get_kos(id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -125,7 +124,7 @@ def get_kos(id):
     }
     return jsonify(kos_data), 200
 
-@app.route('/kos/<id>', methods=['PUT'])
+@kos_bp.route('/kos/<id>', methods=['PUT'])
 def update_kos(id):
     data = request.get_json()
     conn = sqlite3.connect(DATABASE)
@@ -146,7 +145,7 @@ def update_kos(id):
     conn.close()
     return jsonify({'message': 'Kos updated successfully'}), 200
 
-@app.route('/kos/<id>', methods=['DELETE'])
+@kos_bp.route('/kos/<id>', methods=['DELETE'])
 def delete_kos(id):
     conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
@@ -154,6 +153,3 @@ def delete_kos(id):
     conn.commit()
     conn.close()
     return jsonify({'message': 'Kos deleted successfully'}), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)

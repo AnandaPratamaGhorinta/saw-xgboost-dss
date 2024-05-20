@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 import pandas as pd
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-import numpy as np
 
-app = Flask(__name__)
+xg_saw_bp = Blueprint('xg_saw', __name__)
 
 # Load the training data from CSV
 data_path = "data_training.csv"  # Update this with the path to your CSV file
@@ -25,7 +24,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Train the XGBoost model
 params = {
     'objective': 'reg:squarederror',
-    'n_estimators': 100,  # Adjust parameters as needed
+    'n_estimators': 100,
     'max_depth': 3,
     'learning_rate': 0.1,
     'subsample': 0.8,
@@ -43,7 +42,7 @@ mse = mean_squared_error(y_test, y_pred)
 print("Mean Squared Error:", mse)
 
 # Define the endpoint for price prediction
-@app.route('/predict', methods=['POST'])
+@xg_saw_bp.route('/predict', methods=['POST'])
 def predict_price():
     try:
         # Receive request data in JSON format
@@ -63,6 +62,3 @@ def predict_price():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 400
-
-if __name__ == '__main__':
-    app.run(debug=True)
