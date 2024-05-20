@@ -1,8 +1,9 @@
 from flask import Flask
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
-
+    CORS(app)
     # Import the blueprints from your modules
     from .xgSAW import xg_saw_bp
     from .SAW import saw_bp

@@ -22,6 +22,8 @@ def init_db():
             )
         ''')
         conn.commit()
+        
+init_db()
 
 @kriteria_bp.route('/kriteria', methods=['POST'])
 def add_kriteria():

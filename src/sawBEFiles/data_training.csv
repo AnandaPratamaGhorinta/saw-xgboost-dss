@@ -1,0 +1,6 @@
+nama_kos,harga,alamat,luas_kamar_panjang,luas_kamar_lebar,kamar_mandi_dalam,air_panas,AC,kasur,meja,kursi,lemari,parkir_sepeda_motor,parkir_mobil,wifi,dapur_umum,laundry,kulkas
+Kos A,1500000,Jl. Contoh No. 1,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1
+Kos B,1200000,Jl. Contoh No. 2,4,5,1,0,1,1,1,1,1,0,0,1,1,0,1
+Kos C,1800000,Jl. Contoh No. 3,4,4,1,1,1,1,1,1,1,1,0,1,1,1,1
+Kos D,2000000,Jl. Contoh No. 4,5,4,1,1,1,1,1,1,1,1,1,1,1,1,1
+Kos E,1300000,Jl. Contoh No. 5,3,3,1,0,1,1,1,1,1,0,1,1,1,1,1
