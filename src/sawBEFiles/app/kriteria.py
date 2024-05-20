@@ -18,7 +18,8 @@ def init_db():
                 kode TEXT NOT NULL,
                 nama TEXT NOT NULL,
                 bobot REAL NOT NULL,
-                tipe TEXT NOT NULL
+                tipe TEXT NOT NULL,
+                active_flag TEXT NOT NULL CHECK(active_flag IN ('ACTIVE', 'INACTIVE'))
             )
         ''')
         conn.commit()
@@ -32,10 +33,11 @@ def add_kriteria():
     nama = data['nama']
     bobot = data['bobot']
     tipe = data['tipe']
+    active_flag = data.get('active_flag', 'ACTIVE')  # Defaultnya "ACTIVE"
     with get_db() as conn:
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO kriteria_kos (kode, nama, bobot, tipe) VALUES (?, ?, ?, ?)',
-                       (kode, nama, bobot, tipe))
+        cursor.execute('INSERT INTO kriteria_kos (kode, nama, bobot, tipe, active_flag) VALUES (?, ?, ?, ?, ?)',
+                       (kode, nama, bobot, tipe, active_flag))
         conn.commit()
     return jsonify({'message': 'Kriteria created successfully!'}), 201
 
@@ -64,11 +66,12 @@ def update_kriteria(id):
     nama = data['nama']
     bobot = data['bobot']
     tipe = data['tipe']
+    active_flag = data.get('active_flag', 'ACTIVE')  # Defaultnya "ACTIVE"
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute('''
-            UPDATE kriteria_kos SET kode = ?, nama = ?, bobot = ?, tipe = ? WHERE id = ?
-        ''', (kode, nama, bobot, tipe, id))
+            UPDATE kriteria_kos SET kode = ?, nama = ?, bobot = ?, tipe = ?, active_flag = ? WHERE id = ?
+        ''', (kode, nama, bobot, tipe, active_flag, id))
         conn.commit()
         if cursor.rowcount == 0:
             return jsonify({'message': 'Kriteria not found'}), 404

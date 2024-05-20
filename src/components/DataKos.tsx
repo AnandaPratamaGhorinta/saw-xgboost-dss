@@ -169,6 +169,7 @@ export const DataKos: React.FC = () => {
 
   return (
     <div>
+      <h2>Data Kos</h2>
       <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
         Add
       </Button>

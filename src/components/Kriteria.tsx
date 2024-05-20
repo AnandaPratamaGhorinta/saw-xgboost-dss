@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, message } from "antd";
+import { Table, Button, Modal, Form, Input, message, Select } from "antd";
 import axios from "axios";
+
+const { Option } = Select;
 
 export const Kriteria: React.FC = () => {
   const [data, setData] = useState([]);
@@ -87,6 +89,14 @@ export const Kriteria: React.FC = () => {
       title: "Tipe",
       dataIndex: "tipe",
       key: "tipe",
+      render: (_text: any, record: any) =>
+        record.tipe === "COST" ? <>Cost</> : <>Benefit</>,
+    },
+    {
+      title: "status",
+      key: "active_flag",
+      render: (_text: any, record: any) =>
+        record.active_flag === "ACTIVE" ? <>Active</> : <>Inactive</>,
     },
     {
       title: "Actions",
@@ -106,6 +116,7 @@ export const Kriteria: React.FC = () => {
 
   return (
     <div>
+      <h2>Kriteria</h2>
       <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
         Add
       </Button>
@@ -178,7 +189,20 @@ export const Kriteria: React.FC = () => {
             label="Tipe"
             rules={[{ required: true, message: "Please input Tipe!" }]}
           >
-            <Input />
+            <Select placeholder="Select Tipe">
+              <Option value="COST">Cost</Option>
+              <Option value="BENEFIT">Benefit</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="active_flag"
+            label="Status"
+            rules={[{ required: true, message: "Please input Status!" }]}
+          >
+            <Select placeholder="Select Status">
+              <Option value="ACTIVE">Active</Option>
+              <Option value="INACTIVE">Inactive</Option>
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify
 saw_bp = Blueprint('saw', __name__)
 
 def saw(data):
+    # Extract criteria and weights
     criteria = set()
     weights = {}
     alternatives = []
@@ -18,6 +19,7 @@ def saw(data):
             kos_data['kriteria'][item['nama_kriteria']] = item['isi_kriteria']
         alternatives.append(kos_data)
 
+    # Normalization step
     max_values = {k: float('-inf') for k in criteria}
     for alt in alternatives:
         for crit, value in alt['kriteria'].items():
@@ -42,6 +44,7 @@ def saw(data):
             norm_alt['total_score'] += norm_weighted_value
         normalized_data.append(norm_alt)
 
+    # Rank alternatives
     normalized_data.sort(key=lambda x: x['total_score'], reverse=True)
     
     return normalized_data
