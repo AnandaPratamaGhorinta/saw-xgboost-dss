@@ -12,12 +12,27 @@ interface KosData {
   nama_kos: string;
   harga: number;
   alamat: string;
+  luas_kamar_panjang: number;
+  luas_kamar_lebar: number;
+  kamar_mandi_dalam: number;
+  air_panas: number;
+  AC: number;
+  kasur: number;
+  meja: number;
+  kursi: number;
+  lemari: number;
+  parkir_sepeda_motor: number;
+  parkir_mobil: number;
+  wifi: number;
+  dapur_umum: number;
+  laundry: number;
+  kulkas: number;
 }
-
 interface KriteriaData {
   kode: string;
   nama: string;
-  bobot: number; // Added bobot property to KriteriaData
+  bobot: number;
+  active_flag: string;
 }
 
 export const Penilaian: React.FC = () => {
@@ -31,6 +46,7 @@ export const Penilaian: React.FC = () => {
   const [rankingData, setRankingData] = useState<any[]>([]);
   const [rankingModalVisible, setRankingModalVisible] =
     useState<boolean>(false);
+  const [filteredKosData, setFilteredKosData] = useState<KosData[]>([]);
 
   useEffect(() => {
     fetchData();
@@ -43,7 +59,10 @@ export const Penilaian: React.FC = () => {
         "http://localhost:5000/kriteria"
       );
       const kosResponse = await axios.get("http://localhost:5000/kos");
-      setKriteriaData(kriteriaResponse.data);
+      const activeKriteria = kriteriaResponse.data.filter(
+        (kriteria: KriteriaData) => kriteria.active_flag === "ACTIVE"
+      );
+      setKriteriaData(activeKriteria);
       setKosData(kosResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -224,6 +243,17 @@ export const Penilaian: React.FC = () => {
       </PDFDownloadLink>
     );
   };
+
+  const handleSearch = (value: string) => {
+    const searchText = value.toLowerCase();
+    const filteredKos = kosData.filter(
+      (kos: KosData) =>
+        kos.nama_kos.toLowerCase().includes(searchText) ||
+        kos.alamat.toLowerCase().includes(searchText)
+    );
+    setFilteredKosData(filteredKos);
+  };
+
   return (
     <div>
       <Modal
@@ -238,10 +268,65 @@ export const Penilaian: React.FC = () => {
       >
         {selectedKos && (
           <div>
-            <p>Nama Kos: {selectedKos.nama_kos}</p>
-            <p>Harga: {selectedKos.harga}</p>
-            <p>Alamat: {selectedKos.alamat}</p>
-            {/* Add more fields as needed */}
+            <div>
+              <p>
+                <strong>Nama Kos:</strong> {selectedKos.nama_kos}
+              </p>
+              <p>
+                <strong>Harga:</strong> {selectedKos.harga}
+              </p>
+              <p>
+                <strong>Alamat:</strong> {selectedKos.alamat}
+              </p>
+              <p>
+                <strong>Luas Kamar:</strong> {selectedKos.luas_kamar_panjang} x{" "}
+                {selectedKos.luas_kamar_lebar}
+              </p>
+              <p>
+                <strong>Kamar Mandi Dalam:</strong>{" "}
+                {selectedKos.kamar_mandi_dalam ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Air Panas:</strong>{" "}
+                {selectedKos.air_panas ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>AC:</strong> {selectedKos.AC ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Kasur:</strong> {selectedKos.kasur ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Meja:</strong> {selectedKos.meja ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Kursi:</strong> {selectedKos.kursi ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Lemari:</strong> {selectedKos.lemari ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Parkir Sepeda Motor:</strong>{" "}
+                {selectedKos.parkir_sepeda_motor ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Parkir Mobil:</strong>{" "}
+                {selectedKos.parkir_mobil ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Wifi:</strong> {selectedKos.wifi ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Dapur Umum:</strong>{" "}
+                {selectedKos.dapur_umum ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Laundry:</strong> {selectedKos.laundry ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Kulkas:</strong> {selectedKos.kulkas ? "Yes" : "No"}
+              </p>
+            </div>
           </div>
         )}
       </Modal>
@@ -254,7 +339,7 @@ export const Penilaian: React.FC = () => {
       />
       <h2>All Kos Data</h2>
       <Space style={{ marginBottom: 16 }}>
-        <Search placeholder="Search" enterButton />
+        <Search placeholder="Search" enterButton onSearch={handleSearch} />
       </Space>
       <Table
         rowSelection={{
@@ -262,7 +347,7 @@ export const Penilaian: React.FC = () => {
           ...rowSelection,
         }}
         columns={kosColumns}
-        dataSource={kosData}
+        dataSource={filteredKosData.length > 0 ? filteredKosData : kosData}
         loading={loading}
         rowKey="id"
       />

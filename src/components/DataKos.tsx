@@ -1,8 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, message } from "antd";
+import { Table, Button, Modal, Form, Input, message, Space } from "antd";
 import axios from "axios";
 import MultipleSimpleCheckBoxInput from "../uiComponent/input/MultipleCheckBoxInput";
 import Link from "antd/es/typography/Link";
+
+interface KosData {
+  id: number;
+  nama_kos: string;
+  harga: number;
+  alamat: string;
+  luas_kamar_panjang: number;
+  luas_kamar_lebar: number;
+  kamar_mandi_dalam: number;
+  air_panas: number;
+  AC: number;
+  kasur: number;
+  meja: number;
+  kursi: number;
+  lemari: number;
+  parkir_sepeda_motor: number;
+  parkir_mobil: number;
+  wifi: number;
+  dapur_umum: number;
+  laundry: number;
+  kulkas: number;
+}
 
 export const DataKos: React.FC = () => {
   const [data, setData] = useState([]);
@@ -12,7 +34,19 @@ export const DataKos: React.FC = () => {
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [selectedKos, setSelectedKos] = useState<any>(null);
+  const [filteredKosData, setFilteredKosData] = useState<KosData[]>([]);
+  const { Search } = Input;
+
   const [form] = Form.useForm();
+  const handleSearch = (value: string) => {
+    const searchText = value.toLowerCase();
+    const filteredKos = data.filter(
+      (kos: KosData) =>
+        kos.nama_kos.toLowerCase().includes(searchText) ||
+        kos.alamat.toLowerCase().includes(searchText)
+    );
+    setFilteredKosData(filteredKos);
+  };
 
   useEffect(() => {
     fetchData();
@@ -170,10 +204,17 @@ export const DataKos: React.FC = () => {
   return (
     <div>
       <h2>Data Kos</h2>
-      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
-        Add
-      </Button>
-      <Table columns={columns} dataSource={data} loading={loading} />
+      <Space style={{ marginBottom: 20 }}>
+        <Search placeholder="Search" enterButton onSearch={handleSearch} />
+        <Button type="primary" onClick={handleAdd}>
+          Add
+        </Button>
+      </Space>
+      <Table
+        columns={columns}
+        dataSource={filteredKosData.length > 0 ? filteredKosData : data}
+        loading={loading}
+      />
       <Modal
         title="Kos Details"
         visible={detailModalVisible}
