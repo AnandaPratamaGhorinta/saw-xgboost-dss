@@ -416,7 +416,7 @@ export const ProcessXGBOOST: React.FC = () => {
         loading={loading}
         rowKey="kode"
       />
-      <h2>All Kos Data</h2>
+      <h2>Data Kos</h2>
       <Space style={{ marginBottom: 16 }}>
         <Search placeholder="Search" enterButton onSearch={handleSearch} />
       </Space>
@@ -431,9 +431,9 @@ export const ProcessXGBOOST: React.FC = () => {
         rowKey="id"
       />
       <Button type="primary" onClick={handleProceed} style={{ marginTop: 16 }}>
-        Proceed
+        Add Alternative
       </Button>
-      <h2>Proceeded Data</h2>
+      <h2>Data Alternatif</h2>
       <div style={{ marginTop: 16 }}>
         <h1>Bobot Prediksi Harga</h1>
         <Input
@@ -462,7 +462,7 @@ export const ProcessXGBOOST: React.FC = () => {
         rowKey="key"
       />
       <Button type="primary" onClick={handleProcess} style={{ marginTop: 16 }}>
-        Process
+        Calculate
       </Button>
       <Modal
         title="Rangking"
