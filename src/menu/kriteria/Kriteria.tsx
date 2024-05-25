@@ -87,7 +87,7 @@ export default function Kriteria() {
         record.tipe === "COST" ? <>Cost</> : <>Benefit</>,
     },
     {
-      title: "status",
+      title: "Status",
       key: "active_flag",
       render: (_text: any, record: any) =>
         record.active_flag === "ACTIVE" ? <>Active</> : <>Inactive</>,
