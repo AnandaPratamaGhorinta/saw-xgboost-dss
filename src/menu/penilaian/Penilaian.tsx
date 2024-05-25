@@ -3,39 +3,14 @@ import { Table, Input, Button, Space, Modal } from "antd";
 import axios from "axios";
 import Link from "antd/es/typography/Link";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import RankDocument from "./document/RankDocument";
+import { KosData, KriteriaData } from "../../services/dto/SAWXGboostDSS";
+import { endpoints } from "../../services/endpoints/endpoints";
+import RankDocument from "../../uiComponent/document/RankDocument";
+import KosDetailRenderer from "../../uiComponent/detail/KosDetailRenderer";
 
 const { Search } = Input;
 
-interface KosData {
-  id: number;
-  nama_kos: string;
-  harga: number;
-  alamat: string;
-  luas_kamar_panjang: number;
-  luas_kamar_lebar: number;
-  kamar_mandi_dalam: number;
-  air_panas: number;
-  AC: number;
-  kasur: number;
-  meja: number;
-  kursi: number;
-  lemari: number;
-  parkir_sepeda_motor: number;
-  parkir_mobil: number;
-  wifi: number;
-  dapur_umum: number;
-  laundry: number;
-  kulkas: number;
-}
-interface KriteriaData {
-  kode: string;
-  nama: string;
-  bobot: number;
-  active_flag: string;
-}
-
-export const Penilaian: React.FC = () => {
+export default function Penilaian() {
   const [kriteriaData, setKriteriaData] = useState<KriteriaData[]>([]);
   const [kosData, setKosData] = useState<KosData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,10 +30,8 @@ export const Penilaian: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const kriteriaResponse = await axios.get(
-        "http://localhost:5000/kriteria"
-      );
-      const kosResponse = await axios.get("http://localhost:5000/kos");
+      const kriteriaResponse = await axios.get(endpoints.kriteria);
+      const kosResponse = await axios.get(endpoints.kos);
       const activeKriteria = kriteriaResponse.data.filter(
         (kriteria: KriteriaData) => kriteria.active_flag === "ACTIVE"
       );
@@ -71,10 +44,7 @@ export const Penilaian: React.FC = () => {
     }
   };
 
-  const onSelectChange = (
-    selectedRowKeys: React.Key[],
-    selectedRows: KosData[]
-  ) => {
+  const onSelectChange = (selectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
 
@@ -131,10 +101,9 @@ export const Penilaian: React.FC = () => {
     });
 
     const payload = { data: requestData };
-    console.log("Processed Data:", payload);
 
     try {
-      const response = await axios.post("http://localhost:5000/saw", payload);
+      const response = await axios.post(endpoints.saw, payload);
       setRankingData(response.data);
       setRankingModalVisible(true);
     } catch (error) {
@@ -257,85 +226,23 @@ export const Penilaian: React.FC = () => {
   return (
     <div>
       <Modal
-        title="Kos Details"
+        title={"Kos Details"}
         visible={detailModalVisible}
         onCancel={() => setDetailModalVisible(false)}
         footer={[
-          <Button key="close" onClick={() => setDetailModalVisible(false)}>
+          <Button key={"close"} onClick={() => setDetailModalVisible(false)}>
             Close
           </Button>,
         ]}
       >
-        {selectedKos && (
-          <div>
-            <div>
-              <p>
-                <strong>Nama Kos:</strong> {selectedKos.nama_kos}
-              </p>
-              <p>
-                <strong>Harga:</strong> {selectedKos.harga}
-              </p>
-              <p>
-                <strong>Alamat:</strong> {selectedKos.alamat}
-              </p>
-              <p>
-                <strong>Luas Kamar:</strong> {selectedKos.luas_kamar_panjang} x{" "}
-                {selectedKos.luas_kamar_lebar}
-              </p>
-              <p>
-                <strong>Kamar Mandi Dalam:</strong>{" "}
-                {selectedKos.kamar_mandi_dalam ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Air Panas:</strong>{" "}
-                {selectedKos.air_panas ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>AC:</strong> {selectedKos.AC ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Kasur:</strong> {selectedKos.kasur ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Meja:</strong> {selectedKos.meja ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Kursi:</strong> {selectedKos.kursi ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Lemari:</strong> {selectedKos.lemari ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Parkir Sepeda Motor:</strong>{" "}
-                {selectedKos.parkir_sepeda_motor ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Parkir Mobil:</strong>{" "}
-                {selectedKos.parkir_mobil ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Wifi:</strong> {selectedKos.wifi ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Dapur Umum:</strong>{" "}
-                {selectedKos.dapur_umum ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Laundry:</strong> {selectedKos.laundry ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Kulkas:</strong> {selectedKos.kulkas ? "Yes" : "No"}
-              </p>
-            </div>
-          </div>
-        )}
+        <KosDetailRenderer data={selectedKos} />
       </Modal>
       <h2>Kriteria Aktif</h2>
       <Table
         columns={columns}
         dataSource={kriteriaData}
         loading={loading}
-        rowKey="kode"
+        rowKey={"kode"}
       />
       <h2>Data Kos</h2>
       <Space style={{ marginBottom: 16 }}>
@@ -349,9 +256,13 @@ export const Penilaian: React.FC = () => {
         columns={kosColumns}
         dataSource={filteredKosData.length > 0 ? filteredKosData : kosData}
         loading={loading}
-        rowKey="id"
+        rowKey={"id"}
       />
-      <Button type="primary" onClick={handleProceed} style={{ marginTop: 16 }}>
+      <Button
+        type={"primary"}
+        onClick={handleProceed}
+        style={{ marginTop: 16 }}
+      >
         Add Alternative
       </Button>
       <h2>Data Alternatif</h2>
@@ -367,19 +278,23 @@ export const Penilaian: React.FC = () => {
         dataSource={proceedTableData}
         rowKey="key"
       />
-      <Button type="primary" onClick={handleProcess} style={{ marginTop: 16 }}>
+      <Button
+        type={"primary"}
+        onClick={handleProcess}
+        style={{ marginTop: 16 }}
+      >
         Calculate
       </Button>
       <Modal
-        title="Rangking"
+        title={"Rangking"}
         visible={rankingModalVisible}
         width={1000}
         onCancel={() => setRankingModalVisible(false)}
         footer={[
-          <Button key="close" onClick={() => setRankingModalVisible(false)}>
+          <Button key={"close"} onClick={() => setRankingModalVisible(false)}>
             Close
           </Button>,
-          <Button key="download" onClick={() => handleDownload()}>
+          <Button key={"download"} onClick={() => handleDownload()}>
             Download
           </Button>,
         ]}
@@ -387,12 +302,10 @@ export const Penilaian: React.FC = () => {
         <Table
           columns={rankingColumns}
           dataSource={rankingData}
-          rowKey="nama_kos"
+          rowKey={"nama_kos"}
           scroll={{ x: true }}
         />
       </Modal>
     </div>
   );
-};
-
-export default Penilaian;
+}

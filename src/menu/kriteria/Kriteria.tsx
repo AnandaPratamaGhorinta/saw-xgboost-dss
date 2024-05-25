@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Input, message, Select } from "antd";
 import axios from "axios";
+import { endpoints } from "../../services/endpoints/endpoints";
 
 const { Option } = Select;
 
-export const Kriteria: React.FC = () => {
+export default function Kriteria() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -19,7 +20,7 @@ export const Kriteria: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/kriteria");
+      const response = await axios.get(endpoints.kriteria);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -30,27 +31,20 @@ export const Kriteria: React.FC = () => {
 
   const handleDelete = async (row: any) => {
     try {
-      setSelectedRow(row); // Set the selected row when clicking the delete button
-      setDeleteModalVisible(true); // Show the delete confirmation modal
+      setSelectedRow(row);
+      setDeleteModalVisible(true);
     } catch (error) {
       console.error("Error deleting data:", error);
     }
   };
 
-  // Function to handle the actual deletion after confirmation
   const confirmDelete = async () => {
     try {
-      // Perform the deletion using Axios
-      await axios.delete(`http://localhost:5000/kriteria/${selectedRow.id}`);
-
-      // Filter out the deleted row from the data array
+      await axios.delete(`${endpoints.kriteria}/${selectedRow.id}`);
       const newData = data.filter((item: any) => item.id !== selectedRow.id);
       setData(newData);
-
-      // Reset selectedRow and close the modal
       setSelectedRow(null);
       setDeleteModalVisible(false);
-
       message.success("Data deleted successfully");
     } catch (error) {
       console.error("Error deleting data:", error);
@@ -139,14 +133,13 @@ export const Kriteria: React.FC = () => {
             .validateFields()
             .then(async (values) => {
               console.log(values);
-              // Send edited data to backend
               if (selectedRow) {
                 await axios.put(
-                  `http://localhost:5000/kriteria/${selectedRow.id}`,
+                  `${endpoints.kriteria}/${selectedRow.id}`,
                   values
                 );
               } else {
-                await axios.post(`http://localhost:5000/kriteria`, values);
+                await axios.post(`${endpoints.kriteria}`, values);
               }
               fetchData();
               form.resetFields();
@@ -208,6 +201,4 @@ export const Kriteria: React.FC = () => {
       </Modal>
     </div>
   );
-};
-
-export default Kriteria;
+}

@@ -3,40 +3,14 @@ import { Table, Input, Button, Space, Modal } from "antd";
 import axios from "axios";
 import Link from "antd/es/typography/Link";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import RankDocument from "./document/RankDocument";
+import { KosData, KriteriaData } from "../../services/dto/SAWXGboostDSS";
+import { endpoints } from "../../services/endpoints/endpoints";
+import RankDocument from "../../uiComponent/document/RankDocument";
+import KosDetailRenderer from "../../uiComponent/detail/KosDetailRenderer";
 
 const { Search } = Input;
 
-interface KosData {
-  id: number;
-  nama_kos: string;
-  harga: number;
-  alamat: string;
-  luas_kamar_panjang: number;
-  luas_kamar_lebar: number;
-  kamar_mandi_dalam: number;
-  air_panas: number;
-  AC: number;
-  kasur: number;
-  meja: number;
-  kursi: number;
-  lemari: number;
-  parkir_sepeda_motor: number;
-  parkir_mobil: number;
-  wifi: number;
-  dapur_umum: number;
-  laundry: number;
-  kulkas: number;
-}
-
-interface KriteriaData {
-  kode: string;
-  nama: string;
-  bobot: number;
-  active_flag: string;
-}
-
-export const ProcessXGBOOST: React.FC = () => {
+export default function ProcessXGBOOST() {
   const [kriteriaData, setKriteriaData] = useState<KriteriaData[]>([]);
   const [kosData, setKosData] = useState<KosData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,11 +31,9 @@ export const ProcessXGBOOST: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const kriteriaResponse = await axios.get(
-        "http://localhost:5000/kriteria"
-      );
+      const kriteriaResponse = await axios.get(endpoints.kriteria);
 
-      const kosResponse = await axios.get("http://localhost:5000/kos");
+      const kosResponse = await axios.get(endpoints.kos);
       const activeKriteria = kriteriaResponse.data.filter(
         (kriteria: KriteriaData) => kriteria.active_flag === "ACTIVE"
       );
@@ -74,10 +46,7 @@ export const ProcessXGBOOST: React.FC = () => {
     }
   };
 
-  const onSelectChange = (
-    selectedRowKeys: React.Key[],
-    selectedRows: KosData[]
-  ) => {
+  const onSelectChange = (selectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
 
@@ -139,10 +108,7 @@ export const ProcessXGBOOST: React.FC = () => {
     });
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/predict",
-        xgboostRequest
-      );
+      const response = await axios.post(endpoints.predict, xgboostRequest);
 
       const enhancedProceedData = selectedRowKeys.map(
         (key: React.Key, index: number) => {
@@ -209,7 +175,7 @@ export const ProcessXGBOOST: React.FC = () => {
     });
     const payload = { data: requestData };
     try {
-      const response = await axios.post("http://localhost:5000/saw", payload);
+      const response = await axios.post(endpoints.saw, payload);
       setRankingData(response.data);
       setRankingModalVisible(true);
     } catch (error) {
@@ -310,8 +276,6 @@ export const ProcessXGBOOST: React.FC = () => {
     },
   ];
 
-  // Client-side code
-
   const handleDownload = () => {
     return (
       <PDFDownloadLink
@@ -347,67 +311,7 @@ export const ProcessXGBOOST: React.FC = () => {
           </Button>,
         ]}
       >
-        {selectedKos && (
-          <div>
-            <p>
-              <strong>Nama Kos:</strong> {selectedKos.nama_kos}
-            </p>
-            <p>
-              <strong>Harga:</strong> {selectedKos.harga}
-            </p>
-            <p>
-              <strong>Alamat:</strong> {selectedKos.alamat}
-            </p>
-            <p>
-              <strong>Luas Kamar:</strong> {selectedKos.luas_kamar_panjang} x{" "}
-              {selectedKos.luas_kamar_lebar}
-            </p>
-            <p>
-              <strong>Kamar Mandi Dalam:</strong>{" "}
-              {selectedKos.kamar_mandi_dalam ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Air Panas:</strong> {selectedKos.air_panas ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>AC:</strong> {selectedKos.AC ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Kasur:</strong> {selectedKos.kasur ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Meja:</strong> {selectedKos.meja ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Kursi:</strong> {selectedKos.kursi ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Lemari:</strong> {selectedKos.lemari ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Parkir Sepeda Motor:</strong>{" "}
-              {selectedKos.parkir_sepeda_motor ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Parkir Mobil:</strong>{" "}
-              {selectedKos.parkir_mobil ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Wifi:</strong> {selectedKos.wifi ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Dapur Umum:</strong>{" "}
-              {selectedKos.dapur_umum ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Laundry:</strong> {selectedKos.laundry ? "Yes" : "No"}
-            </p>
-            <p>
-              <strong>Kulkas:</strong> {selectedKos.kulkas ? "Yes" : "No"}
-            </p>
-            {/* Add more fields as needed */}
-          </div>
-        )}
+        <KosDetailRenderer data={selectedKos} />
       </Modal>
       <h2>Kriteria Aktif</h2>
       <Table
@@ -487,6 +391,4 @@ export const ProcessXGBOOST: React.FC = () => {
       </Modal>
     </div>
   );
-};
-
-export default ProcessXGBOOST;
+}

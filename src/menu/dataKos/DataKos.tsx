@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Input, message, Space } from "antd";
 import axios from "axios";
-import MultipleSimpleCheckBoxInput from "../uiComponent/input/MultipleCheckBoxInput";
 import Link from "antd/es/typography/Link";
+import { KosData } from "../../services/dto/SAWXGboostDSS";
+import { endpoints } from "../../services/endpoints/endpoints";
+import KosDetailRenderer from "../../uiComponent/detail/KosDetailRenderer";
+import MultipleSimpleCheckBoxInput from "../../uiComponent/input/MultipleCheckBoxInput";
 
-interface KosData {
-  id: number;
-  nama_kos: string;
-  harga: number;
-  alamat: string;
-  luas_kamar_panjang: number;
-  luas_kamar_lebar: number;
-  kamar_mandi_dalam: number;
-  air_panas: number;
-  AC: number;
-  kasur: number;
-  meja: number;
-  kursi: number;
-  lemari: number;
-  parkir_sepeda_motor: number;
-  parkir_mobil: number;
-  wifi: number;
-  dapur_umum: number;
-  laundry: number;
-  kulkas: number;
-}
-
-export const DataKos: React.FC = () => {
+export default function DataKos() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -36,8 +17,8 @@ export const DataKos: React.FC = () => {
   const [selectedKos, setSelectedKos] = useState<any>(null);
   const [filteredKosData, setFilteredKosData] = useState<KosData[]>([]);
   const { Search } = Input;
-
   const [form] = Form.useForm();
+
   const handleSearch = (value: string) => {
     const searchText = value.toLowerCase();
     const filteredKos = data.filter(
@@ -55,7 +36,7 @@ export const DataKos: React.FC = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/kos");
+      const response = await axios.get(endpoints.kos);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -66,24 +47,18 @@ export const DataKos: React.FC = () => {
 
   const handleDelete = async (row: any) => {
     try {
-      setSelectedRow(row); // Set the selected row when clicking the delete button
-      setDeleteModalVisible(true); // Show the delete confirmation modal
+      setSelectedRow(row);
+      setDeleteModalVisible(true);
     } catch (error) {
       console.error("Error deleting data:", error);
     }
   };
 
-  // Function to handle the actual deletion after confirmation
   const confirmDelete = async () => {
     try {
-      // Perform the deletion using Axios
-      await axios.delete(`http://localhost:5000/kos/${selectedRow.id}`);
-
-      // Filter out the deleted row from the data array
+      await axios.delete(`${endpoints.kos}/${selectedRow.id}`);
       const newData = data.filter((item: any) => item.id !== selectedRow.id);
       setData(newData);
-
-      // Reset selectedRow and close the modal
       setSelectedRow(null);
       setDeleteModalVisible(false);
 
@@ -225,14 +200,7 @@ export const DataKos: React.FC = () => {
           </Button>,
         ]}
       >
-        {selectedKos && (
-          <div>
-            <p>Nama Kos: {selectedKos.nama_kos}</p>
-            <p>Harga: {selectedKos.harga}</p>
-            <p>Alamat: {selectedKos.alamat}</p>
-            {/* Add more fields as needed */}
-          </div>
-        )}
+        <KosDetailRenderer data={selectedKos} />
       </Modal>
 
       <Modal
@@ -251,15 +219,10 @@ export const DataKos: React.FC = () => {
           form
             .validateFields()
             .then(async (values) => {
-              console.log(values);
-              // Send edited data to backend
               if (selectedRow) {
-                await axios.put(
-                  `http://localhost:5000/kos/${selectedRow.id}`,
-                  values
-                );
+                await axios.put(`${endpoints.kos}/${selectedRow.id}`, values);
               } else {
-                await axios.post(`http://localhost:5000/kos`, values);
+                await axios.post(`${endpoints.kos}`, values);
               }
               fetchData();
               form.resetFields();
@@ -323,6 +286,4 @@ export const DataKos: React.FC = () => {
       </Modal>
     </div>
   );
-};
-
-export default DataKos;
+}

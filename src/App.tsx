@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Layout } from "antd";
-import Sidebar from "./components/Sidebar";
-import { DataKos } from "./components/DataKos";
-import { Kriteria } from "./components/Kriteria";
-import { Penilaian } from "./components/Penilaian";
-import { ProcessXGBOOST } from "./components/ProcessXGBOOST";
-import WelcomeDashboard from "./components/Dashboard";
+import Sidebar from "./uiComponent/Sidebar";
+import WelcomeDashboard from "./menu/dashboard/Dashboard";
+import DataKos from "./menu/dataKos/DataKos";
+import Kriteria from "./menu/kriteria/Kriteria";
+import Penilaian from "./menu/penilaian/Penilaian";
+import ProcessXGBOOST from "./menu/processXGBOOST/ProcessXGBOOST";
 
 const { Content } = Layout;
 
