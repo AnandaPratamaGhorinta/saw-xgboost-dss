@@ -1,6 +1,18 @@
 nama_kos,harga,alamat,luas_kamar_panjang,luas_kamar_lebar,kamar_mandi_dalam,air_panas,AC,kasur,meja,kursi,lemari,parkir_sepeda_motor,parkir_mobil,wifi,dapur_umum,laundry,kulkas
-Kos A,1500000,Jl. Contoh No. 1,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1
-Kos B,1200000,Jl. Contoh No. 2,4,5,1,0,1,1,1,1,1,0,0,1,1,0,1
-Kos C,1800000,Jl. Contoh No. 3,4,4,1,1,1,1,1,1,1,1,0,1,1,1,1
-Kos D,2000000,Jl. Contoh No. 4,5,4,1,1,1,1,1,1,1,1,1,1,1,1,1
-Kos E,1300000,Jl. Contoh No. 5,3,3,1,0,1,1,1,1,1,0,1,1,1,1,1
+Kos Apik Binus Mandiri Tipe C ,1345000,Jl.Salam IV,3,3,1,0,0,1,1,1,1,1,1,1,1,0,1
+Kos Apik Binus Mandiri Tipe A,1730000,Jl.Salam IV,3,4,1,0,0,1,1,1,1,1,0,1,1,0,1
+"Kost Willykrnwn Kebon Jeruk Jakarta Barat 859WK
+",1400000,"Jalan A 17C, Kecamatan Kebon Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta, 11530 .",3,4,1,1,1,1,1,1,1,1,0,1,1,0,1
+"Kost 32 Residence Kebon Jeruk Jakarta Barat 298XD
+",2200000," Jl. Kebon Jeruk Raya No. 32, Batusari, Kebon Jeruk, Jakarta Barat .",3,4,1,1,1,1,1,1,1,1,0,1,1,1,1
+"Kost 5 Star Tipe Standar Palmerah Jakarta Barat 89SM9D1P
+",1750000,"Jalan Kemanggisan Raya B-3 Palmerah, Kec. Palmerah, Kota Jakarta Barat",3,3,1,0,1,1,1,1,1,1,1,1,1,1,1
+Kost Gazebo House Tipe A Tanjung Duren Grogol Petamburan Jakarta Barat 206AT,1400000,"l. Delima V no. 28, Tanjung Duren Selatan, Grogol Petamburan, Jakarta Barat ",3,3,0,0,1,1,1,1,1,1,0,1,1,0,1
+"Kost Mekar Jaya Tipe Bougenville Kebon Jeruk Jakarta Barat 081ME
+",800000,"Jalan Anggrek Cakra No 64 RT 07 RW 09, Kebon Jeruk, Jakarta Barat, 11530 .",3,3,0,0,0,1,0,0,1,1,0,0,0,0,0
+"Kost Mekar Jaya Tipe Dahlia Kebon Jeruk Jakarta Barat 932174MJ
+",900000,"Jl. Anggrek Cakra No.65, RT.7/RW.9, Kb. Jeruk, Kec. Kb. Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11530, Indonesia .",3,4,0,0,0,1,0,0,1,1,0,0,0,0,0
+"Kost Binus Abdi Syahdan Residence Tipe A Palmerah Jakarta Barat 429167BA
+",2280000,"Jl. Kh.Syahdan Gg. Keluarga No.30, RT.6/RW.12, Palmerah, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11480, Indonesia .",2,4,1,1,1,1,1,1,1,1,0,1,1,0,1
+"Kost Apik BINUS Anggrek Tipe B Palmerah Jakarta Barat B1L7WR04
+",1125000,"Jl. Kemanggisan Raya No.27, RT.5/RW.13, Palmerah, Kec. Palmerah, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11480",3,2,0,0,0,1,1,1,1,1,0,1,0,0,0

@@ -1,3 +1,4 @@
+import { CheckSquareTwoTone, CloseSquareFilled } from "@ant-design/icons";
 import { KosData } from "../../services/dto/SAWXGboostDSS";
 
 interface KosDetailRendererProps {
@@ -24,44 +25,63 @@ export default function KosDetailRenderer({ data }: KosDetailRendererProps) {
           </p>
           <p>
             <strong>Kamar Mandi Dalam:</strong>{" "}
-            {data.kamar_mandi_dalam ? "Yes" : "No"}
+            {data.kamar_mandi_dalam ? (
+              <CheckSquareTwoTone />
+            ) : (
+              <CloseSquareFilled />
+            )}
           </p>
           <p>
-            <strong>Air Panas:</strong> {data.air_panas ? "Yes" : "No"}
+            <strong>Air Panas:</strong>{" "}
+            {data.air_panas ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>AC:</strong> {data.AC ? "Yes" : "No"}
+            <strong>AC:</strong>{" "}
+            {data.AC ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Kasur:</strong> {data.kasur ? "Yes" : "No"}
+            <strong>Kasur:</strong>{" "}
+            {data.kasur ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Meja:</strong> {data.meja ? "Yes" : "No"}
+            <strong>Meja:</strong>{" "}
+            {data.meja ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Kursi:</strong> {data.kursi ? "Yes" : "No"}
+            <strong>Kursi:</strong>{" "}
+            {data.kursi ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Lemari:</strong> {data.lemari ? "Yes" : "No"}
+            <strong>Lemari:</strong>{" "}
+            {data.lemari ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
             <strong>Parkir Sepeda Motor:</strong>{" "}
-            {data.parkir_sepeda_motor ? "Yes" : "No"}
+            {data.parkir_sepeda_motor ? (
+              <CheckSquareTwoTone />
+            ) : (
+              <CloseSquareFilled />
+            )}
           </p>
           <p>
-            <strong>Parkir Mobil:</strong> {data.parkir_mobil ? "Yes" : "No"}
+            <strong>Parkir Mobil:</strong>{" "}
+            {data.parkir_mobil ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Wifi:</strong> {data.wifi ? "Yes" : "No"}
+            <strong>Wifi:</strong>{" "}
+            {data.wifi ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Dapur Umum:</strong> {data.dapur_umum ? "Yes" : "No"}
+            <strong>Dapur Umum:</strong>{" "}
+            {data.dapur_umum ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Laundry:</strong> {data.laundry ? "Yes" : "No"}
+            <strong>Laundry:</strong>{" "}
+            {data.laundry ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
           <p>
-            <strong>Kulkas:</strong> {data.kulkas ? "Yes" : "No"}
+            <strong>Kulkas:</strong>{" "}
+            {data.kulkas ? <CheckSquareTwoTone /> : <CloseSquareFilled />}
           </p>
         </div>
       )}

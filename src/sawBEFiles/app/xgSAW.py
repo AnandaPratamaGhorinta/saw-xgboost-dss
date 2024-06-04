@@ -56,9 +56,10 @@ def predict_price():
         
         # Perform prediction with the trained model
         predicted_prices = model.predict(df)
-        
+        predicted_prices_int = [int(price) for price in predicted_prices]
+
         # Return predicted prices in JSON format
-        return jsonify({'predicted_price': predicted_prices.tolist()})
+        return jsonify({'predicted_price':predicted_prices_int})
     
     except Exception as e:
         return jsonify({'error': str(e)}), 400
