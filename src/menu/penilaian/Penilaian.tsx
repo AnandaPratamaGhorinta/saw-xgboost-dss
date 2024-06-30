@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Input, Button, Space, Modal } from "antd";
+import { Table, Input, Button, Space, Modal, Collapse } from "antd";
 import axios from "axios";
 import Link from "antd/es/typography/Link";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -222,6 +222,7 @@ export default function Penilaian() {
     );
     setFilteredKosData(filteredKos);
   };
+  const { Panel } = Collapse;
 
   return (
     <div>
@@ -266,6 +267,17 @@ export default function Penilaian() {
         Add Alternative
       </Button>
       <h2>Data Alternatif</h2>
+
+      <Collapse defaultActiveKey={["1"]}>
+        <Panel header="Notes" key="1">
+          <p>Jika Kriteria sifatnya ada dan tidak ada maka</p>
+          <p>
+            input 1 untuk kriteria yg tersedia dan input 0 untuk kriteria yang
+            tidak tersedia
+          </p>
+        </Panel>
+      </Collapse>
+
       <Table
         columns={[
           {
@@ -288,7 +300,7 @@ export default function Penilaian() {
       <Modal
         title={"Rangking"}
         visible={rankingModalVisible}
-        width={1000}
+        width={2000}
         onCancel={() => setRankingModalVisible(false)}
         footer={[
           <Button key={"close"} onClick={() => setRankingModalVisible(false)}>

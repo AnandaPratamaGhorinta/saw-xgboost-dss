@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, message, Select } from "antd";
+import {
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
+  Select,
+  Collapse,
+} from "antd";
 import axios from "axios";
 import { endpoints } from "../../services/endpoints/endpoints";
 
@@ -108,10 +117,22 @@ export default function Kriteria() {
     },
   ];
 
+  const { Panel } = Collapse;
+
   return (
     <div>
       <h2>Kriteria</h2>
-      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
+      <Collapse defaultActiveKey={["1"]}>
+        <Panel header="Notes" key="1">
+          <p>Range Input Untuk Bobot Kriteria Adalah 0 sampai 1.</p>
+        </Panel>
+      </Collapse>
+
+      <Button
+        type="primary"
+        onClick={handleAdd}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
         Add
       </Button>
       <Table columns={columns} dataSource={data} loading={loading} />
