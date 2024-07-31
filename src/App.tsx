@@ -4,7 +4,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 import Sidebar from "./uiComponent/Sidebar";
 import WelcomeDashboard from "./menu/dashboard/Dashboard";
 import DataKos from "./menu/dataKos/DataKos";
@@ -12,20 +12,43 @@ import Kriteria from "./menu/kriteria/Kriteria";
 import Penilaian from "./menu/penilaian/Penilaian";
 import ProcessXGBOOST from "./menu/processXGBOOST/ProcessXGBOOST";
 import Login from "./public/login/Login";
+import { useState } from "react";
+import { createUseStyles } from "react-jss";
+import { appStyles } from "./app.style";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
-const { Content } = Layout;
+const useStyles = createUseStyles(appStyles);
+
+const { Content, Header } = Layout;
 
 const App = () => {
+  const classes = useStyles();
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
-
+  const [collapsed, setCollapsed] = useState(false);
+  const handleCollapseToggle = () => {
+    setCollapsed(!collapsed);
+  };
   return (
     <>
       {!isLoginPage && (
         <Layout style={{ minHeight: "100vh" }}>
-          <Sidebar />
+          <Sidebar collapsed={collapsed} />
           <Layout>
-            <Content style={{ padding: "0 50px" }}>
+            <Header className={classes.header}>
+              {/* Replace with your logo path */}
+              <Button
+                type="text"
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                onClick={handleCollapseToggle}
+              />
+              <img
+                src="/user-icon.png"
+                alt="User Icon"
+                className={classes.userIcon}
+              />
+            </Header>
+            <Content className={classes.content}>
               <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
                 <Routes>
                   <Route path="/" element={<WelcomeDashboard />} />

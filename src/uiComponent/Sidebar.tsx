@@ -6,12 +6,22 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
+import { createUseStyles } from "react-jss";
+import { appStyles } from "../app.style";
 
+const useStyles = createUseStyles(appStyles);
 const { Sider } = Layout;
 
-const Sidebar = () => {
+interface SidebarProps {
+  collapsed: boolean;
+}
+
+const Sidebar = ({ collapsed }: SidebarProps) => {
+  const classes = useStyles();
   return (
-    <Sider width={200} className="site-layout-background">
+    <Sider width={200} className="site-layout-background" collapsed={collapsed}>
+      <img src="/logo.png" alt="Logo" className={classes.logo} />
+      {" TEST "}
       <Menu
         mode="inline"
         theme="dark"
