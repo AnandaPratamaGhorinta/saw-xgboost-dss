@@ -2,20 +2,26 @@ import { Form, Input, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 import { loginStyles } from "./login.style";
+import { useState } from "react";
 
 export const useStyles = createUseStyles(loginStyles);
 
 export default function Login() {
   const navigate = useNavigate();
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    setLoading(true);
+
     // Redirect to the desired route on successful login
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const onFinishFailed = (errorInfo: any) => {
+    setLoading(false);
+
     console.log("Failed:", errorInfo);
   };
 
@@ -48,6 +54,7 @@ export default function Login() {
             type="primary"
             htmlType="submit"
             className={classes.loginFormButton}
+            loading={loading}
           >
             Log in
           </Button>

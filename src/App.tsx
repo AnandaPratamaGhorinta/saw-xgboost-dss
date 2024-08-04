@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import { Button, Layout } from "antd";
 import Sidebar from "./uiComponent/Sidebar";
-import WelcomeDashboard from "./menu/dashboard/Dashboard";
 import DataKos from "./menu/dataKos/DataKos";
 import Kriteria from "./menu/kriteria/Kriteria";
 import Penilaian from "./menu/penilaian/Penilaian";
@@ -16,6 +15,7 @@ import { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { appStyles } from "./app.style";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import Dashboard from "./menu/dashboard/Dashboard";
 
 const useStyles = createUseStyles(appStyles);
 
@@ -42,16 +42,20 @@ const App = () => {
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 onClick={handleCollapseToggle}
               />
-              <img
-                src="/user-icon.png"
-                alt="User Icon"
-                className={classes.userIcon}
-              />
+              <div className={classes.userDetailContainer}>
+                <h1>USER 01</h1>
+                <img
+                  src="/user.png"
+                  alt="User Icon"
+                  className={classes.userIcon}
+                />
+              </div>
             </Header>
             <Content className={classes.content}>
               <div style={{ background: "#fff", padding: 24, minHeight: 280 }}>
                 <Routes>
-                  <Route path="/" element={<WelcomeDashboard />} />
+                  <Route path="/" element={<></>} />
+                  <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/data-kos" element={<DataKos />} />
                   <Route path="/kriteria" element={<Kriteria />} />
                   <Route path="/penilaian" element={<Penilaian />} />

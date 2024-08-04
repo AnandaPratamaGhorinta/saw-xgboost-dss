@@ -1,8 +1,7 @@
 import {
-  CalculatorOutlined,
-  FunctionOutlined,
   HomeOutlined,
-  SettingOutlined,
+  UserOutlined,
+  BranchesOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
@@ -30,16 +29,13 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
         style={{ height: "100%", borderRight: 0 }}
       >
         <Menu.Item key="1" icon={<HomeOutlined />}>
-          <Link to="/data-kos">Data Kos</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<SettingOutlined />}>
-          <Link to="/kriteria">Kriteria</Link>
+        <Menu.Item key="2" icon={<BranchesOutlined />}>
+          <Link to="/branch">Branch</Link>
         </Menu.Item>
-        <Menu.Item key="3" icon={<CalculatorOutlined />}>
-          <Link to="/penilaian">Penilaian</Link>
-        </Menu.Item>
-        <Menu.Item key="4" icon={<FunctionOutlined />}>
-          <Link to="/process-xgboost">Penilaian XGBOOST</Link>
+        <Menu.Item key="3" icon={<UserOutlined />}>
+          <Link to="/user">User</Link>
         </Menu.Item>
       </Menu>
     </Sider>

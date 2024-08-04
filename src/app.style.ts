@@ -14,6 +14,8 @@ export const appStyles = {
       },
       userIcon: {
         height: 40,
+        marginTop:30,
+        marginLeft: 20,
       },
       layout: {
         minHeight: "100vh",
@@ -26,4 +28,7 @@ export const appStyles = {
         display: "flex",
         alignItems: "center",
       },
+      userDetailContainer:{
+        display: "flex",
+      }
 }
