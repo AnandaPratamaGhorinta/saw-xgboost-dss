@@ -1,5 +1,5 @@
 import React from "react";
-import { Bar, Pie } from "react-chartjs-2";
+import { Bar, Pie, Doughnut, Line } from "react-chartjs-2";
 import { createUseStyles } from "react-jss";
 import {
   Chart as ChartJS,
@@ -148,6 +148,16 @@ const Dashboard: React.FC = () => {
           <div className={classes.chartContainer}>
             <h2>Services Data</h2>
             <Bar data={servicesData} />
+          </div>
+        </div>
+        <div className={classes.chartRow}>
+          <div className={classes.chartContainer}>
+            <h2>Sales Data</h2>
+            <Line data={salesData} />
+          </div>
+          <div className={classes.chartContainer}>
+            <h2>Services Data</h2>
+            <Doughnut data={salesData} />
           </div>
         </div>
       </div>
