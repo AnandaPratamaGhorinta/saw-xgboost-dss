@@ -16,6 +16,11 @@ import { createUseStyles } from "react-jss";
 import { appStyles } from "./app.style";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Dashboard from "./menu/dashboard/Dashboard";
+import BranchSearch from "./menu/branch/search/BranchSearch";
+import BranchAddInput from "./menu/branch/add/input/BranchAddInput";
+import BranchAddReview from "./menu/branch/add/review/BranchAddReview";
+import BranchAddSuccess from "./menu/branch/add/success/BranchAddSuccess";
+import BranchDetail from "./menu/branch/detail/BranchDetail";
 
 const useStyles = createUseStyles(appStyles);
 
@@ -60,6 +65,20 @@ const App = () => {
                   <Route path="/kriteria" element={<Kriteria />} />
                   <Route path="/penilaian" element={<Penilaian />} />
                   <Route path="/process-xgboost" element={<ProcessXGBOOST />} />
+                  <Route path="/branch" element={<BranchSearch />} />
+                  <Route path="/branch/detail" element={<BranchDetail />} />
+                  <Route
+                    path="/branch/add/input"
+                    element={<BranchAddInput />}
+                  />
+                  <Route
+                    path="/branch/add/review"
+                    element={<BranchAddReview />}
+                  />
+                  <Route
+                    path="/branch/add/success"
+                    element={<BranchAddSuccess />}
+                  />
                 </Routes>
               </div>
             </Content>

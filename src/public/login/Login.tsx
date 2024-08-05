@@ -10,8 +10,9 @@ export default function Login() {
   const navigate = useNavigate();
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
-  const onFinish = (values: any) => {
+  const onFinishLogin = (values: any) => {
     console.log("Success:", values);
     setLoading(true);
 
@@ -19,47 +20,111 @@ export default function Login() {
     navigate("/dashboard");
   };
 
+  const onFinishForgotPassword = (values: any) => {
+    console.log("Forgot Password Success:", values);
+    setLoading(false);
+    // Here you would normally handle the password reset logic
+  };
+
   const onFinishFailed = (errorInfo: any) => {
     setLoading(false);
-
     console.log("Failed:", errorInfo);
   };
 
   return (
     <div className={classes.loginContainer}>
-      <Form
-        name="login"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        className={classes.loginForm}
-      >
-        <h2>Login</h2>
-        <Form.Item
-          name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+      {!isForgotPassword ? (
+        <Form
+          name="login"
+          initialValues={{ remember: true }}
+          onFinish={onFinishLogin}
+          onFinishFailed={onFinishFailed}
+          className={classes.loginForm}
         >
-          <Input placeholder="Username" />
-        </Form.Item>
-
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
-        >
-          <Input.Password placeholder="Password" />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className={classes.loginFormButton}
-            loading={loading}
+          <h2>Login</h2>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: "Please input your Username!" }]}
           >
-            Log in
-          </Button>
-        </Form.Item>
-      </Form>
+            <Input placeholder="Username" />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
+            <Input.Password placeholder="Password" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={classes.loginFormButton}
+              loading={loading}
+            >
+              Log in
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="link" onClick={() => setIsForgotPassword(true)}>
+              Forgot Password
+            </Button>
+          </Form.Item>
+        </Form>
+      ) : (
+        <Form
+          name="forgot-password"
+          onFinish={onFinishForgotPassword}
+          onFinishFailed={onFinishFailed}
+          className={classes.loginForm}
+        >
+          <h2>Forgot Password</h2>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please input your Email!" }]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
+          <Form.Item
+            name="username"
+            rules={[{ required: true, message: "Please input your Username!" }]}
+          >
+            <Input placeholder="Username" />
+          </Form.Item>
+          <Form.Item
+            name="newPassword"
+            rules={[
+              { required: true, message: "Please input your new Password!" },
+            ]}
+          >
+            <Input.Password placeholder="New Password" />
+          </Form.Item>
+          <Form.Item
+            name="confirmNewPassword"
+            rules={[
+              { required: true, message: "Please confirm your new Password!" },
+            ]}
+          >
+            <Input.Password placeholder="Confirm New Password" />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className={classes.loginFormButton}
+              loading={loading}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="link" onClick={() => setIsForgotPassword(false)}>
+              Back
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
     </div>
   );
 }
