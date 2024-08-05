@@ -112,7 +112,7 @@ export default function BranchSearch() {
       <div className={classes.headerContainer}>
         <h2>Branch</h2>
         <Button
-          type="ghost"
+          ghost
           onClick={() => navigate("/branch/add/input")}
           className={classes.addButton}
         >
